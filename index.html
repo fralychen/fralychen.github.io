@@ -94,28 +94,16 @@
       
         <p>LVS/DR搭建<br>整个集群系统结构：</p>
 <p>宿主机环境（默认桌面环境）：充当客户端访问 web 服务<br>LoadBalancer1 的 container：装有 ipvsadm，充当负载均衡调度器<br>RealServer1 的 container：部署 Nginx web 服务器，提供 Web 访问服务，充当服务器池中的一员<br>RealServer2 的 container：部署 Nginx web 服务器，提供 Web 访问服务，充当服务器池中的一员</p>
-<p><--more--><br>-本地安装 ipvsadm 工具，加载 IPVS 模块<br>-通过 docker 创建三个 container 来模拟服务器池中的成员<br>-配置两台 RealServer 的环境：<br>—安装 vim 与 nginx 工具<br>—修改默认的 nginx 展示页面<br>—修改内核参数，抑制 arp<br>—创建网卡别名与添加路由<br>-配置一台 LoadBalancer 环境：<br>—安装 ipvsadm<br>—配置网卡别名<br>—配置 ipvsadm 规则<br>-测试实验效果</--more--></p>
-<p>#首先创建三台container</p>
-<blockquote>
-<p>docker run –privileged –name=LoadBalancer -tid ubuntu<br>docker run –privileged –name=RealServer1 -tid ubuntu<br>docker run –privileged –name=RealServer2 -tid ubuntu</p>
-</blockquote>
-<p>#登陆容器RealServer1</p>
-<blockquote>
-<p>docker attach RealServer1</p>
-</blockquote>
-<p>##修改arp参数<br>‘’’</p>
-<h1 id="设置只回答目标IP地址是来访网络接口本地地址的ARP查询请求"><a href="#设置只回答目标IP地址是来访网络接口本地地址的ARP查询请求" class="headerlink" title="设置只回答目标IP地址是来访网络接口本地地址的ARP查询请求"></a>设置只回答目标IP地址是来访网络接口本地地址的ARP查询请求</h1><p>echo “1” &gt; /proc/sys/net/ipv4/conf/lo/arp_ignore<br>echo “1” &gt; /proc/sys/net/ipv4/conf/all/arp_ignore</p>
-<h1 id="为了保险自己可以查看一下是否成功修改"><a href="#为了保险自己可以查看一下是否成功修改" class="headerlink" title="为了保险自己可以查看一下是否成功修改"></a>为了保险自己可以查看一下是否成功修改</h1><p>cat /proc/sys/net/ipv4/conf/lo/arp_ignore</p>
-<h1 id="设置对查询目标使用最适当的本地地址-在此模式下将忽略这个IP数据包的源地址并尝试选择与能与该地址通信的本地地址-首要是选择所有的网络接口的子网中外出访问子网中包含该目标IP地址的本地地址-如果没有合适的地址被发现-将选择当前的发送网络接口或其他的有可能接受到该ARP回应的网络接口来进行发送"><a href="#设置对查询目标使用最适当的本地地址-在此模式下将忽略这个IP数据包的源地址并尝试选择与能与该地址通信的本地地址-首要是选择所有的网络接口的子网中外出访问子网中包含该目标IP地址的本地地址-如果没有合适的地址被发现-将选择当前的发送网络接口或其他的有可能接受到该ARP回应的网络接口来进行发送" class="headerlink" title="设置对查询目标使用最适当的本地地址.在此模式下将忽略这个IP数据包的源地址并尝试选择与能与该地址通信的本地地址.首要是选择所有的网络接口的子网中外出访问子网中包含该目标IP地址的本地地址. 如果没有合适的地址被发现,将选择当前的发送网络接口或其他的有可能接受到该ARP回应的网络接口来进行发送."></a>设置对查询目标使用最适当的本地地址.在此模式下将忽略这个IP数据包的源地址并尝试选择与能与该地址通信的本地地址.首要是选择所有的网络接口的子网中外出访问子网中包含该目标IP地址的本地地址. 如果没有合适的地址被发现,将选择当前的发送网络接口或其他的有可能接受到该ARP回应的网络接口来进行发送.</h1><p>echo “2” &gt; /proc/sys/net/ipv4/conf/lo/arp_announce<br>echo “2” &gt; /proc/sys/net/ipv4/conf/all/arp_announce</p>
-<h1 id="使得上面的配置立即生效"><a href="#使得上面的配置立即生效" class="headerlink" title="使得上面的配置立即生效"></a>使得上面的配置立即生效</h1><p>sysctl -p<br>‘’’</p>
-<p>##配置虚拟网卡（与dockerIP同一网段）</p>
-<blockquote>
-<p>ifconfig lo:0 172.17.0.10 broadcast 172.17.0.10 netmask 255.255.255.255 up</p>
-</blockquote>
-<p>##安装web服务器</p>
-<blockquote>
-<p>apt-get update<br>apt-get install nginx<br>service nginx start</p>
-</blockquote>
+<p>&lt;–!more–&gt;<br>-本地安装 ipvsadm 工具，加载 IPVS 模块<br>-通过 docker 创建三个 container 来模拟服务器池中的成员<br>-配置两台 RealServer 的环境：<br>—安装 vim 与 nginx 工具<br>—修改默认的 nginx 展示页面<br>—修改内核参数，抑制 arp<br>—创建网卡别名与添加路由<br>-配置一台 LoadBalancer 环境：<br>—安装 ipvsadm<br>—配置网卡别名<br>—配置 ipvsadm 规则<br>-测试实验效果</p>
+<p>#首先创建三台container<br>docker run –privileged –name=LoadBalancer -tid ubuntu<br>docker run –privileged –name=RealServer1 -tid ubuntu<br>docker run –privileged –name=RealServer2 -tid ubuntu</p>
+<p>#登陆容器RealServer1<br>docker attach RealServer1</p>
+<p>##修改arp参数</p>
+<p>echo “1” &gt; /proc/sys/net/ipv4/conf/lo/arp_ignore<br>echo “1” &gt; /proc/sys/net/ipv4/conf/all/arp_ignore</p>
+<p>cat /proc/sys/net/ipv4/conf/lo/arp_ignore</p>
+<p>echo “2” &gt; /proc/sys/net/ipv4/conf/lo/arp_announce<br>echo “2” &gt; /proc/sys/net/ipv4/conf/all/arp_announce</p>
+<p>sysctl -p</p>
+<p>##配置虚拟网卡（与dockerIP同一网段）<br>ifconfig lo:0 172.17.0.10 broadcast 172.17.0.10 netmask 255.255.255.255 up</p>
+<p>##安装web服务器<br>apt-get update<br>apt-get install nginx<br>service nginx start</p>
 <p>#同理配置RealServer2</p>
 <p>#配置调度器<br>‘’’<br>docker attach LoadBalancer<br>apt-get update<br>apt-get install ipvsadm -y<br>apt-get install net-tools -y</p>
 <p>#配置网卡别名并绑定虚拟IP（三个docker container 同一个VIP）<br>ifconfig eth0:0 172.17.0.10 netmask 255.255.255.0 up</p>
@@ -126,7 +114,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/05/06/LVS-docker实现负载均衡/" data-id="cjguwqdc20002h55v04z4hfbf" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/05/06/LVS-docker实现负载均衡/" data-id="cjgux5xlz0002il5v65626g33" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LVS-docker/">LVS|docker</a></li></ul>
@@ -170,7 +158,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/05/05/IP协议介绍/" data-id="cjguwqdbm0000h55voj64e779" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/05/05/IP协议介绍/" data-id="cjgux5xlm0000il5vuw0o75xt" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/network/">network</a></li></ul>
@@ -217,7 +205,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/05/05/hello-world/" data-id="cjguwqdcg0005h55vdotsle34" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/05/05/hello-world/" data-id="cjgux5xmf0005il5vfi0apb9c" class="article-share-link">Share</a>
       
       
     </footer>
