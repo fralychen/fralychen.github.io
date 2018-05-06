@@ -7,18 +7,18 @@
   
   <title>LVS+docker实现负载均衡 | fralychen</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="LVS/DR搭建整个集群系统结构： 宿主机环境（默认桌面环境）：充当客户端访问 web 服务LoadBalancer1 的 container：装有 ipvsadm，充当负载均衡调度器RealServer1 的 container：部署 Nginx web 服务器，提供 Web 访问服务，充当服务器池中的一员RealServer2 的 container：部署 Nginx web 服务器，提供 W">
+  <meta name="description" content="##整个集群系统结构： 宿主机环境（默认桌面环境）：充当客户端访问 web 服务LoadBalancer1 的 container：装有 ipvsadm，充当负载均衡调度器RealServer1 的 container：部署 Nginx web 服务器，提供 Web 访问服务，充当服务器池中的一员RealServer2 的 container：部署 Nginx web 服务器，提供 Web 访问服">
 <meta name="keywords" content="LVS|docker">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LVS+docker实现负载均衡">
 <meta property="og:url" content="http://yoursite.com/2018/05/06/LVS-docker实现负载均衡/index.html">
 <meta property="og:site_name" content="fralychen">
-<meta property="og:description" content="LVS/DR搭建整个集群系统结构： 宿主机环境（默认桌面环境）：充当客户端访问 web 服务LoadBalancer1 的 container：装有 ipvsadm，充当负载均衡调度器RealServer1 的 container：部署 Nginx web 服务器，提供 Web 访问服务，充当服务器池中的一员RealServer2 的 container：部署 Nginx web 服务器，提供 W">
+<meta property="og:description" content="##整个集群系统结构： 宿主机环境（默认桌面环境）：充当客户端访问 web 服务LoadBalancer1 的 container：装有 ipvsadm，充当负载均衡调度器RealServer1 的 container：部署 Nginx web 服务器，提供 Web 访问服务，充当服务器池中的一员RealServer2 的 container：部署 Nginx web 服务器，提供 Web 访问服">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-05-06T14:35:17.354Z">
+<meta property="og:updated_time" content="2018-05-06T14:38:38.226Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="LVS+docker实现负载均衡">
-<meta name="twitter:description" content="LVS/DR搭建整个集群系统结构： 宿主机环境（默认桌面环境）：充当客户端访问 web 服务LoadBalancer1 的 container：装有 ipvsadm，充当负载均衡调度器RealServer1 的 container：部署 Nginx web 服务器，提供 Web 访问服务，充当服务器池中的一员RealServer2 的 container：部署 Nginx web 服务器，提供 W">
+<meta name="twitter:description" content="##整个集群系统结构： 宿主机环境（默认桌面环境）：充当客户端访问 web 服务LoadBalancer1 的 container：装有 ipvsadm，充当负载均衡调度器RealServer1 的 container：部署 Nginx web 服务器，提供 Web 访问服务，充当服务器池中的一员RealServer2 的 container：部署 Nginx web 服务器，提供 Web 访问服">
   
     <link rel="alternate" href="/atom.xml" title="fralychen" type="application/atom+xml">
   
@@ -91,9 +91,10 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>LVS/DR搭建<br>整个集群系统结构：</p>
+        <p>##整个集群系统结构：</p>
 <p>宿主机环境（默认桌面环境）：充当客户端访问 web 服务<br>LoadBalancer1 的 container：装有 ipvsadm，充当负载均衡调度器<br>RealServer1 的 container：部署 Nginx web 服务器，提供 Web 访问服务，充当服务器池中的一员<br>RealServer2 的 container：部署 Nginx web 服务器，提供 Web 访问服务，充当服务器池中的一员</p>
-<p>&lt;–!more–&gt;<br>-本地安装 ipvsadm 工具，加载 IPVS 模块<br>-通过 docker 创建三个 container 来模拟服务器池中的成员<br>-配置两台 RealServer 的环境：<br>—安装 vim 与 nginx 工具<br>—修改默认的 nginx 展示页面<br>—修改内核参数，抑制 arp<br>—创建网卡别名与添加路由<br>-配置一台 LoadBalancer 环境：<br>—安装 ipvsadm<br>—配置网卡别名<br>—配置 ipvsadm 规则<br>-测试实验效果</p>
+<a id="more"></a>
+<p>-本地安装 ipvsadm 工具，加载 IPVS 模块<br>-通过 docker 创建三个 container 来模拟服务器池中的成员<br>-配置两台 RealServer 的环境：<br>—安装 vim 与 nginx 工具<br>—修改默认的 nginx 展示页面<br>—修改内核参数，抑制 arp<br>—创建网卡别名与添加路由<br>-配置一台 LoadBalancer 环境：<br>—安装 ipvsadm<br>—配置网卡别名<br>—配置 ipvsadm 规则<br>-测试实验效果</p>
 <p>#首先创建三台container<br>docker run –privileged –name=LoadBalancer -tid ubuntu<br>docker run –privileged –name=RealServer1 -tid ubuntu<br>docker run –privileged –name=RealServer2 -tid ubuntu</p>
 <p>#登陆容器RealServer1<br>docker attach RealServer1</p>
 <p>##修改arp参数</p>
@@ -113,7 +114,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/05/06/LVS-docker实现负载均衡/" data-id="cjgux5xlz0002il5v65626g33" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/05/06/LVS-docker实现负载均衡/" data-id="cjguxa83d0002ji5vcng92nn0" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LVS-docker/">LVS|docker</a></li></ul>
