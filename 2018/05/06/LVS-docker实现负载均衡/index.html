@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="fralychen">
 <meta property="og:description" content="##整个集群系统结构： 宿主机环境（默认桌面环境）：充当客户端访问 web 服务LoadBalancer1 的 container：装有 ipvsadm，充当负载均衡调度器RealServer1 的 container：部署 Nginx web 服务器，提供 Web 访问服务，充当服务器池中的一员RealServer2 的 container：部署 Nginx web 服务器，提供 Web 访问服">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-05-06T14:38:38.226Z">
+<meta property="og:updated_time" content="2018-05-06T14:40:42.688Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="LVS+docker实现负载均衡">
 <meta name="twitter:description" content="##整个集群系统结构： 宿主机环境（默认桌面环境）：充当客户端访问 web 服务LoadBalancer1 的 container：装有 ipvsadm，充当负载均衡调度器RealServer1 的 container：部署 Nginx web 服务器，提供 Web 访问服务，充当服务器池中的一员RealServer2 的 container：部署 Nginx web 服务器，提供 Web 访问服">
@@ -105,16 +105,16 @@
 <p>##配置虚拟网卡（与dockerIP同一网段）<br>ifconfig lo:0 172.17.0.10 broadcast 172.17.0.10 netmask 255.255.255.255 up</p>
 <p>##安装web服务器<br>apt-get update<br>apt-get install nginx<br>service nginx start</p>
 <p>#同理配置RealServer2</p>
-<p>#配置调度器<br>‘’’<br>docker attach LoadBalancer<br>apt-get update<br>apt-get install ipvsadm -y<br>apt-get install net-tools -y</p>
+<p>#配置调度器<br>docker attach LoadBalancer<br>apt-get update<br>apt-get install ipvsadm -y<br>apt-get install net-tools -y</p>
 <p>#配置网卡别名并绑定虚拟IP（三个docker container 同一个VIP）<br>ifconfig eth0:0 172.17.0.10 netmask 255.255.255.0 up</p>
-<p>#添加ipvs规则<br>ipvsadm -A -t 172.17.0.10:80 -s rr #定义集群服务<br>ipvsadm -a -t 172.17.0.10:80 -r 172.17.0.2 #添加 RealServer1 IP<br>ipvsadm -a -t 172.17.0.10:80 -r 172.17.0.3 #添加 RealServer2 IP<br>‘’’</p>
+<p>#添加ipvs规则<br>ipvsadm -A -t 172.17.0.10:80 -s rr #定义集群服务<br>ipvsadm -a -t 172.17.0.10:80 -r 172.17.0.2 #添加 RealServer1 IP<br>ipvsadm -a -t 172.17.0.10:80 -r 172.17.0.3 #添加 RealServer2 IP</p>
 <p>ctrl+p+q 退出不关闭docker，在宿主机上访问172.17.0.10</p>
 <p>#OK ring the bell</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/05/06/LVS-docker实现负载均衡/" data-id="cjguxa83d0002ji5vcng92nn0" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/05/06/LVS-docker实现负载均衡/" data-id="cjguxcu9b0002kf5vbr66af98" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LVS-docker/">LVS|docker</a></li></ul>
