@@ -5,20 +5,19 @@
   
 
   
-  <title>IP协议 | fralychen</title>
+  <title>Tag: vim | fralychen</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="##IP协议简介 规定网络地址的协议，叫做IP协议。它所定义的地址，就被称为IP地址。目前，广泛采用的是IP协议第四版，简称IPv4。这个版本规定，网络地址由32个二进制位组成。">
-<meta name="keywords" content="network">
-<meta property="og:type" content="article">
-<meta property="og:title" content="IP协议">
-<meta property="og:url" content="http://yoursite.com/2018/05/05/IP协议介绍/index.html">
+  <meta name="description" content="This is fralychen first Hexo blog">
+<meta name="keywords" content="fralychen|Hexo|shiyanlou|Git|github|npm|">
+<meta property="og:type" content="website">
+<meta property="og:title" content="fralychen">
+<meta property="og:url" content="http://yoursite.com/tags/vim/index.html">
 <meta property="og:site_name" content="fralychen">
-<meta property="og:description" content="##IP协议简介 规定网络地址的协议，叫做IP协议。它所定义的地址，就被称为IP地址。目前，广泛采用的是IP协议第四版，简称IPv4。这个版本规定，网络地址由32个二进制位组成。">
+<meta property="og:description" content="This is fralychen first Hexo blog">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-05-06T01:45:37.363Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="IP协议">
-<meta name="twitter:description" content="##IP协议简介 规定网络地址的协议，叫做IP协议。它所定义的地址，就被称为IP地址。目前，广泛采用的是IP协议第四版，简称IPv4。这个版本规定，网络地址由32个二进制位组成。">
+<meta name="twitter:title" content="fralychen">
+<meta name="twitter:description" content="This is fralychen first Hexo blog">
   
     <link rel="alternate" href="/atom.xml" title="fralychen" type="application/atom+xml">
   
@@ -85,62 +84,40 @@
 </header>
 
       <div class="outer">
-        <section id="main"><article id="post-IP协议介绍" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/05/05/IP协议介绍/" class="article-date">
-  <time datetime="2018-05-05T04:41:30.000Z" itemprop="datePublished">2018-05-05</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
+        <section id="main">
   
-    <h1 class="article-title" itemprop="name">
-      IP协议
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2018" class="archive-year">2018</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2018/05/26/vim配置方案/" class="archive-article-date">
+  <time datetime="2018-05-26T09:32:57.000Z" itemprop="datePublished">May 26</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2018/05/26/vim配置方案/">vim配置方案</a>
     </h1>
   
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>##IP协议简介</p>
-<p>规定网络地址的协议，叫做IP协议。它所定义的地址，就被称为IP地址。目前，广泛采用的是IP协议第四版，简称IPv4。这个版本规定，网络地址由32个二进制位组成。</p>
-<a id="more"></a>
-<p>##IP协议内容</p>
-<p>-习惯上，我们用分成四段的十进制数表示IP地址，从0.0.0.0一直到255.255.255.255。<br>-互联网上的每一台计算机，都会分配到一个IP地址。这个地址分成两个部分，前一部分代表网络，后一部分代表主机。比如，IP地址172.16.254.1，这是一个32位的地址，假定它的网络部分是前24位（172.16.254），那么主机部分就是后8位（最后的那个1）。处于同一个子网络的电脑，它们IP地址的网络部分必定是相同的，也就是说172.16.254.2应该与172.16.254.1处在同一个子网络。<br>-但是，问题在于单单从IP地址，我们无法判断网络部分。还是以172.16.254.1为例，它的网络部分，到底是前24位，还是前16位，甚至前28位，从IP地址上是看不出来的。<br>-那么，怎样才能从IP地址，判断两台计算机是否属于同一个子网络呢？这就要用到另一个参数”子网掩码”（subnet mask）。<br>-所谓”子网掩码”，就是表示子网络特征的一个参数。它在形式上等同于IP地址，也是一个32位二进制数字，它的网络部分全部为1，主机部分全部为0。比如，IP地址172.16.254.1，如果已知网络部分是前24位，主机部分是后8位，那么子网络掩码就是11111111.11111111.11111111.00000000，写成十进制就是255.255.255.0。<br>-知道”子网掩码”，我们就能判断，任意两个IP地址是否处在同一个子网络。方法是将两个IP地址与子网掩码分别进行AND运算（两个数位都为1，运算结果为1，否则为0），然后比较结果是否相同，如果是的话，就表明它们在同一个子网络中，否则就不是。<br>-比如，已知IP地址172.16.254.1和172.16.254.233的子网掩码都是255.255.255.0，请问它们是否在同一个子网络？两者与子网掩码分别进行AND运算，结果都是172.16.254.0，因此它们在同一个子网络。<br>-总结一下，IP协议的作用主要有两个，一个是为每一台计算机分配IP地址，另一个是确定哪些地址在同一个子网络。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/05/05/IP协议介绍/" data-id="cjhn7bsg500009s5vk74sagiu" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/network/">network</a></li></ul>
-
-    </footer>
+    </header>
   </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2018/05/06/LVS-docker实现负载均衡/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          LVS+docker实现负载均衡
-        
-      </div>
-    </a>
-  
-  
-</nav>
-
-  
 </article>
+  
+  
+    </div></section>
+  
+
 
 </section>
         
