@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>TcpDump 简析 | fralychen</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="抓包工具tcpdumptcpdump的选项介绍-a 　　　将网络地址和广播地址转变成名字；-d 　　　将匹配信息包的代码以人们能够理解的汇编格式给出；-dd 　　　将匹配信息包的代码以c语言程序段的格式给出；-ddd 　　　将匹配信息包的代码以十进制的形式给出；-e 　　　在输出行打印出数据链路层的头部信息；-f 　　　将外部的Internet地址以数字的形式打印出来；-l 　　　使标准输出变为缓">
+<meta name="keywords" content="NetWork">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TcpDump 简析">
+<meta property="og:url" content="http://yoursite.com/2018/05/28/TcpDump-简析/index.html">
+<meta property="og:site_name" content="fralychen">
+<meta property="og:description" content="抓包工具tcpdumptcpdump的选项介绍-a 　　　将网络地址和广播地址转变成名字；-d 　　　将匹配信息包的代码以人们能够理解的汇编格式给出；-dd 　　　将匹配信息包的代码以c语言程序段的格式给出；-ddd 　　　将匹配信息包的代码以十进制的形式给出；-e 　　　在输出行打印出数据链路层的头部信息；-f 　　　将外部的Internet地址以数字的形式打印出来；-l 　　　使标准输出变为缓">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-05-28T12:32:03.879Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="TcpDump 简析">
+<meta name="twitter:description" content="抓包工具tcpdumptcpdump的选项介绍-a 　　　将网络地址和广播地址转变成名字；-d 　　　将匹配信息包的代码以人们能够理解的汇编格式给出；-dd 　　　将匹配信息包的代码以c语言程序段的格式给出；-ddd 　　　将匹配信息包的代码以十进制的形式给出；-e 　　　在输出行打印出数据链路层的头部信息；-f 　　　将外部的Internet地址以数字的形式打印出来；-l 　　　使标准输出变为缓">
+  
+    <link rel="alternate" href="/atom.xml" title="fralychen" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">fralychen</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Study by shiyanlou</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+	<a href="https://github.com/fralychen"><img style="position: absolute; right: 0; margin-top: 180px;" src="https://git-png.oss-cn-shenzhen.aliyuncs.com/stroke_letter_f_lowercase_128px_1065973_easyicon.net.png" alt="Fork me on GitHub"></a>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-TcpDump-简析" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/05/28/TcpDump-简析/" class="article-date">
+  <time datetime="2018-05-28T12:23:15.000Z" itemprop="datePublished">2018-05-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      TcpDump 简析
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="抓包工具tcpdump"><a href="#抓包工具tcpdump" class="headerlink" title="抓包工具tcpdump"></a>抓包工具tcpdump</h2><h3 id="tcpdump的选项介绍"><a href="#tcpdump的选项介绍" class="headerlink" title="tcpdump的选项介绍"></a>tcpdump的选项介绍</h3><p>-a 　　　将网络地址和广播地址转变成名字；<br>-d 　　　将匹配信息包的代码以人们能够理解的汇编格式给出；<br>-dd 　　　将匹配信息包的代码以c语言程序段的格式给出；<br>-ddd 　　　将匹配信息包的代码以十进制的形式给出；<br>-e 　　　在输出行打印出数据链路层的头部信息；<br>-f 　　　将外部的Internet地址以数字的形式打印出来；<br>-l 　　　使标准输出变为缓冲行形式；<br>-n 　　　不把网络地址转换成名字；<br>-t 　　　在输出的每一行不打印时间戳；<br>-v 　　　输出一个稍微详细的信息，例如在ip包中可以包括ttl和服务类型的信息；<br>-vv 　　　输出详细的报文信息；<br>-c 　　　在收到指定的包的数目后，tcpdump就会停止；<br>-F 　　　从指定的文件中读取表达式,忽略其它的表达式；<br>-i 　　　指定监听的网络接口；<br>-r 　　　从指定的文件中读取包(这些包一般通过-w选项产生)；<br>-w 　　　直接将包写入文件中，并不分析和打印出来；<br>-T 　　　将监听到的包直接解释为指定的类型的报文，常见的类型有rpc （远程过程调用）和snmp（简单网络管理协议；））</p>
+<h3 id="表达式介绍"><a href="#表达式介绍" class="headerlink" title="表达式介绍"></a>表达式介绍</h3><p>表达式是一个正则表达式，tcpdump利用它作为过滤报文的条件，如果一个报文满足表达式的条件；<br>则这个报文将会被捕获，如果没有给出任何条件，则网络上所有的信息包将会被截获。</p>
+<p>在表达式中一般如下几种类型的关键字，<br>一种是关于类型的关键字，主要包括host，net，port, 例如 host 210.27.48.2，指明 210.27.48.2是一台主机；<br>net 202.0.0.0 指明202.0.0.0是一个网络地址，port 23 指明端口号是23。如果没有指定类型，缺省的类型是host.</p>
+<p>第二种是确定传输方向的关键字，主要包括src , dst ,dst or src, dst and src ,这些关键字指明了传输的方向；<br>举例说明，src 210.27.48.2 ,指明ip包中源地址是210.27.48.2 , dst net 202.0.0.0 指明目的网络地址是202.0.0.0 。<br>如果没有指明方向关键字，则缺省是src or dst关键字。</p>
+<p>第三种是协议的关键字，主要包括fddi,ip ,arp,rarp,tcp,udp等类型。Fddi指明是在FDDI(分布式光纤数据接口网络)上的特定的网络协议；<br>实际上它是”ether”的别名，fddi和ether具有类似的源地址和目的地址，所以可以将fddi协议包当作ether的包进行处理和分析；<br>其他的几个关键字就是指明了监听的包的协议内容。如果没有指定任何协议，则tcpdump将会监听所有协议的信息包。</p>
+<p>除了这三种类型的关键字之外，其它重要的关键字如下：<br>gateway, broadcast,less,greater,还有三种逻辑运算，取非运算是 ‘not ‘ ‘! ‘, 与运算是’and’,’&amp;&amp;’;或运算 是’or’ ,’||’；</p>
+<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><p>1 想要截获所有192.168.57.71 的主机收到的和发出的所有的数据包：<br>tcpdump host 192.168.57.71 </p>
+<p>2 想要截获主机192.168.57.71 和主机192.168.57.72 或192.168.57.73 的通信，使用命令<br>tcpdump host 192.168.57.71 and (192.168.57.72 or 192.168.57.73 ) </p>
+<p>3 想要获取主机192.168.57.71除了和主机192.168.57.72之外所有主机通信的ip包，使用命令：<br>tcpdump ip host 192.168.57.71 and ! 192.168.57.72</p>
+<p>4 想要获取主机192.168.57.71接收或发出的telnet包，使用如下命令：<br>tcpdump tcp port 23 and host 192.168.57.71 </p>
+<p>5 想要获取发往主机的所有icmp 包<br>tcpdump icmp -vvn -i eth0</p>
+<p>6 想要获取主机与192.168.4.35的所有icmp 包<br>tcpdump -nnv icmp and host 192.168.4.35</p>
+<h3 id="TCP包的输出信息"><a href="#TCP包的输出信息" class="headerlink" title="TCP包的输出信息"></a>TCP包的输出信息</h3><p>用TCPDUMP捕获的TCP包的一般输出信息是：<br>src &gt; dst: flags data-seqno ack window urgent options<br>src &gt; dst:表明从源地址到目的地址, flags是TCP包中的标志信息,S 是SYN标志, F (FIN), P (PUSH) , R (RST) “.” (没有标记);<br>data-seqno是数据包中的数据的顺序号, ack是下次期望的顺序号, window是接收缓存的窗口大小,<br>urgent表明数据包中是否有紧急指针. Options是选项.</p>
+<p>每一行中间都有这个包所携带的标志：<br>S=SYN   发起连接标志<br>P=PUSH  传送数据标志<br>F=FIN    关闭连接标志<br>ack     表示确认包<br>RST= RESET  异常关闭连接<br>.      表示没有任何标志</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/05/28/TcpDump-简析/" data-id="cjhq8g7ur0007af5vy7u1yr5q" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NetWork/">NetWork</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/05/26/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Hello World</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/LVS-docker/">LVS|docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NetWork/">NetWork</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jenkins/">jenkins</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/network/">network</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx-balancer/">nginx balancer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssh/">ssh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/LVS-docker/" style="font-size: 10px;">LVS|docker</a> <a href="/tags/NetWork/" style="font-size: 10px;">NetWork</a> <a href="/tags/jenkins/" style="font-size: 10px;">jenkins</a> <a href="/tags/network/" style="font-size: 20px;">network</a> <a href="/tags/nginx-balancer/" style="font-size: 10px;">nginx balancer</a> <a href="/tags/ssh/" style="font-size: 10px;">ssh</a> <a href="/tags/vim/" style="font-size: 10px;">vim</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/05/28/TcpDump-简析/">TcpDump 简析</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/26/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/26/vim配置方案/">vim配置方案</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/25/ssh登陆配置/">ssh登陆配置</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/24/Linux-Dash/">Linux Dash</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <canvas style="background:#eeeeee" id="canvas"></canvas>
+<script src="https://git-png.oss-cn-shenzhen.aliyuncs.com/ParticleEffects.js"></script>
+<footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 Fralychen<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+	<script color="black" opacity="0.5" count="99" src="https://cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.js" type="text/javascript" charset="utf-8"></script>
+  </div>
+</body>
+</html>

@@ -86,6 +86,58 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-TcpDump-简析" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/05/28/TcpDump-简析/" class="article-date">
+  <time datetime="2018-05-28T12:23:15.000Z" itemprop="datePublished">2018-05-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/28/TcpDump-简析/">TcpDump 简析</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="抓包工具tcpdump"><a href="#抓包工具tcpdump" class="headerlink" title="抓包工具tcpdump"></a>抓包工具tcpdump</h2><h3 id="tcpdump的选项介绍"><a href="#tcpdump的选项介绍" class="headerlink" title="tcpdump的选项介绍"></a>tcpdump的选项介绍</h3><p>-a 　　　将网络地址和广播地址转变成名字；<br>-d 　　　将匹配信息包的代码以人们能够理解的汇编格式给出；<br>-dd 　　　将匹配信息包的代码以c语言程序段的格式给出；<br>-ddd 　　　将匹配信息包的代码以十进制的形式给出；<br>-e 　　　在输出行打印出数据链路层的头部信息；<br>-f 　　　将外部的Internet地址以数字的形式打印出来；<br>-l 　　　使标准输出变为缓冲行形式；<br>-n 　　　不把网络地址转换成名字；<br>-t 　　　在输出的每一行不打印时间戳；<br>-v 　　　输出一个稍微详细的信息，例如在ip包中可以包括ttl和服务类型的信息；<br>-vv 　　　输出详细的报文信息；<br>-c 　　　在收到指定的包的数目后，tcpdump就会停止；<br>-F 　　　从指定的文件中读取表达式,忽略其它的表达式；<br>-i 　　　指定监听的网络接口；<br>-r 　　　从指定的文件中读取包(这些包一般通过-w选项产生)；<br>-w 　　　直接将包写入文件中，并不分析和打印出来；<br>-T 　　　将监听到的包直接解释为指定的类型的报文，常见的类型有rpc （远程过程调用）和snmp（简单网络管理协议；））</p>
+<h3 id="表达式介绍"><a href="#表达式介绍" class="headerlink" title="表达式介绍"></a>表达式介绍</h3><p>表达式是一个正则表达式，tcpdump利用它作为过滤报文的条件，如果一个报文满足表达式的条件；<br>则这个报文将会被捕获，如果没有给出任何条件，则网络上所有的信息包将会被截获。</p>
+<p>在表达式中一般如下几种类型的关键字，<br>一种是关于类型的关键字，主要包括host，net，port, 例如 host 210.27.48.2，指明 210.27.48.2是一台主机；<br>net 202.0.0.0 指明202.0.0.0是一个网络地址，port 23 指明端口号是23。如果没有指定类型，缺省的类型是host.</p>
+<p>第二种是确定传输方向的关键字，主要包括src , dst ,dst or src, dst and src ,这些关键字指明了传输的方向；<br>举例说明，src 210.27.48.2 ,指明ip包中源地址是210.27.48.2 , dst net 202.0.0.0 指明目的网络地址是202.0.0.0 。<br>如果没有指明方向关键字，则缺省是src or dst关键字。</p>
+<p>第三种是协议的关键字，主要包括fddi,ip ,arp,rarp,tcp,udp等类型。Fddi指明是在FDDI(分布式光纤数据接口网络)上的特定的网络协议；<br>实际上它是”ether”的别名，fddi和ether具有类似的源地址和目的地址，所以可以将fddi协议包当作ether的包进行处理和分析；<br>其他的几个关键字就是指明了监听的包的协议内容。如果没有指定任何协议，则tcpdump将会监听所有协议的信息包。</p>
+<p>除了这三种类型的关键字之外，其它重要的关键字如下：<br>gateway, broadcast,less,greater,还有三种逻辑运算，取非运算是 ‘not ‘ ‘! ‘, 与运算是’and’,’&amp;&amp;’;或运算 是’or’ ,’||’；</p>
+<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><p>1 想要截获所有192.168.57.71 的主机收到的和发出的所有的数据包：<br>tcpdump host 192.168.57.71 </p>
+<p>2 想要截获主机192.168.57.71 和主机192.168.57.72 或192.168.57.73 的通信，使用命令<br>tcpdump host 192.168.57.71 and (192.168.57.72 or 192.168.57.73 ) </p>
+<p>3 想要获取主机192.168.57.71除了和主机192.168.57.72之外所有主机通信的ip包，使用命令：<br>tcpdump ip host 192.168.57.71 and ! 192.168.57.72</p>
+<p>4 想要获取主机192.168.57.71接收或发出的telnet包，使用如下命令：<br>tcpdump tcp port 23 and host 192.168.57.71 </p>
+<p>5 想要获取发往主机的所有icmp 包<br>tcpdump icmp -vvn -i eth0</p>
+<p>6 想要获取主机与192.168.4.35的所有icmp 包<br>tcpdump -nnv icmp and host 192.168.4.35</p>
+<h3 id="TCP包的输出信息"><a href="#TCP包的输出信息" class="headerlink" title="TCP包的输出信息"></a>TCP包的输出信息</h3><p>用TCPDUMP捕获的TCP包的一般输出信息是：<br>src &gt; dst: flags data-seqno ack window urgent options<br>src &gt; dst:表明从源地址到目的地址, flags是TCP包中的标志信息,S 是SYN标志, F (FIN), P (PUSH) , R (RST) “.” (没有标记);<br>data-seqno是数据包中的数据的顺序号, ack是下次期望的顺序号, window是接收缓存的窗口大小,<br>urgent表明数据包中是否有紧急指针. Options是选项.</p>
+<p>每一行中间都有这个包所携带的标志：<br>S=SYN   发起连接标志<br>P=PUSH  传送数据标志<br>F=FIN    关闭连接标志<br>ack     表示确认包<br>RST= RESET  异常关闭连接<br>.      表示没有任何标志</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/05/28/TcpDump-简析/" data-id="cjhq8g7ur0007af5vy7u1yr5q" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NetWork/">NetWork</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/05/26/hello-world/" class="article-date">
@@ -118,7 +170,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/05/26/hello-world/" data-id="cjhn7m6wl0007lz5vubxxdobv" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/05/26/hello-world/" data-id="cjhq8g7uv000aaf5v7rx39xrj" class="article-share-link">Share</a>
       
       
     </footer>
@@ -159,7 +211,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/05/26/vim配置方案/" data-id="cjhn7m6wx000flz5vdqsi9hf0" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/05/26/vim配置方案/" data-id="cjhq8g7v6000haf5vv6aphpqo" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vim/">vim</a></li></ul>
@@ -202,7 +254,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/05/25/ssh登陆配置/" data-id="cjhn7m6wv000dlz5vjd3bb7sr" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/05/25/ssh登陆配置/" data-id="cjhq8g7v4000faf5vn2w7caxo" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ssh/">ssh</a></li></ul>
@@ -245,7 +297,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/05/24/Linux-Dash/" data-id="cjhn7m6wd0005lz5vxdybszcf" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/05/24/Linux-Dash/" data-id="cjhq8g7ui0005af5viqgvdkna" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/network/">network</a></li></ul>
@@ -289,7 +341,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/05/10/kali-工具介绍/" data-id="cjhn7m6wr000blz5v5hygvl6a" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/05/10/kali-工具介绍/" data-id="cjhq8g7v2000daf5v1b084hof" class="article-share-link">Share</a>
       
       
     </footer>
@@ -331,7 +383,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/05/10/HAProxy-Documentation/" data-id="cjhn7m6xp000plz5vevooeeq3" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/05/10/HAProxy-Documentation/" data-id="cjhq8g7w0000saf5vmfb9hbcq" class="article-share-link">Share</a>
       
       
     </footer>
@@ -374,7 +426,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/05/09/NGINX-Load-Balancing-HTTP-Load-Balancer/" data-id="cjhn7m6wh0006lz5vkrkiej61" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/05/09/NGINX-Load-Balancing-HTTP-Load-Balancer/" data-id="cjhq8g7un0006af5vkcvqng8k" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nginx-balancer/">nginx balancer</a></li></ul>
@@ -417,7 +469,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/05/09/java-maven-app-with-docker-github/" data-id="cjhn7m6wo000alz5vt1ky2vl1" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/05/09/java-maven-app-with-docker-github/" data-id="cjhq8g7uy000baf5v6kyqmdao" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jenkins/">jenkins</a></li></ul>
@@ -461,7 +513,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/05/06/LVS-docker实现负载均衡/" data-id="cjhn7m6vx0002lz5vbcsu576i" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/05/06/LVS-docker实现负载均衡/" data-id="cjhq8g7u20002af5v121yhib3" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LVS-docker/">LVS|docker</a></li></ul>
@@ -473,51 +525,12 @@
 
 
   
-    <article id="post-IP协议介绍" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/05/05/IP协议介绍/" class="article-date">
-  <time datetime="2018-05-05T04:41:30.000Z" itemprop="datePublished">2018-05-05</time>
-</a>
+
+
+  <nav id="page-nav">
     
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/05/IP协议介绍/">IP协议</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>##IP协议简介</p>
-<p>规定网络地址的协议，叫做IP协议。它所定义的地址，就被称为IP地址。目前，广泛采用的是IP协议第四版，简称IPv4。这个版本规定，网络地址由32个二进制位组成。</p>
-        
-          <p class="article-more-link">
-            <a href="/2018/05/05/IP协议介绍/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/05/05/IP协议介绍/" data-id="cjhn7m6vj0000lz5v77bfyg3s" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/network/">network</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+  </nav>
 
 </section>
         
@@ -530,7 +543,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/LVS-docker/">LVS|docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jenkins/">jenkins</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/network/">network</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx-balancer/">nginx balancer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssh/">ssh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/LVS-docker/">LVS|docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NetWork/">NetWork</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jenkins/">jenkins</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/network/">network</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx-balancer/">nginx balancer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssh/">ssh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a></li></ul>
     </div>
   </div>
 
@@ -540,7 +553,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/LVS-docker/" style="font-size: 10px;">LVS|docker</a> <a href="/tags/jenkins/" style="font-size: 10px;">jenkins</a> <a href="/tags/network/" style="font-size: 20px;">network</a> <a href="/tags/nginx-balancer/" style="font-size: 10px;">nginx balancer</a> <a href="/tags/ssh/" style="font-size: 10px;">ssh</a> <a href="/tags/vim/" style="font-size: 10px;">vim</a>
+      <a href="/tags/LVS-docker/" style="font-size: 10px;">LVS|docker</a> <a href="/tags/NetWork/" style="font-size: 10px;">NetWork</a> <a href="/tags/jenkins/" style="font-size: 10px;">jenkins</a> <a href="/tags/network/" style="font-size: 20px;">network</a> <a href="/tags/nginx-balancer/" style="font-size: 10px;">nginx balancer</a> <a href="/tags/ssh/" style="font-size: 10px;">ssh</a> <a href="/tags/vim/" style="font-size: 10px;">vim</a>
     </div>
   </div>
 
@@ -562,6 +575,10 @@
       <ul>
         
           <li>
+            <a href="/2018/05/28/TcpDump-简析/">TcpDump 简析</a>
+          </li>
+        
+          <li>
             <a href="/2018/05/26/hello-world/">Hello World</a>
           </li>
         
@@ -575,10 +592,6 @@
         
           <li>
             <a href="/2018/05/24/Linux-Dash/">Linux Dash</a>
-          </li>
-        
-          <li>
-            <a href="/2018/05/10/kali-工具介绍/">kali 工具介绍</a>
           </li>
         
       </ul>
