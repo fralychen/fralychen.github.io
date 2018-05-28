@@ -7,18 +7,18 @@
   
   <title>TcpDump 简析 | fralychen</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="抓包工具tcpdumptcpdump的选项介绍-a 　　　将网络地址和广播地址转变成名字；-d 　　　将匹配信息包的代码以人们能够理解的汇编格式给出；-dd 　　　将匹配信息包的代码以c语言程序段的格式给出；-ddd 　　　将匹配信息包的代码以十进制的形式给出；-e 　　　在输出行打印出数据链路层的头部信息；-f 　　　将外部的Internet地址以数字的形式打印出来；-l 　　　使标准输出变为缓">
+  <meta name="description" content="抓包工具tcpdumptcpdump的选项介绍-a 　　　将网络地址和广播地址转变成名字；-d 　　　将匹配信息包的代码以人们能够理解的汇编格式给出；-dd 　　　将匹配信息包的代码以c语言程序段的格式给出；">
 <meta name="keywords" content="NetWork">
 <meta property="og:type" content="article">
 <meta property="og:title" content="TcpDump 简析">
 <meta property="og:url" content="http://yoursite.com/2018/05/28/TcpDump-简析/index.html">
 <meta property="og:site_name" content="fralychen">
-<meta property="og:description" content="抓包工具tcpdumptcpdump的选项介绍-a 　　　将网络地址和广播地址转变成名字；-d 　　　将匹配信息包的代码以人们能够理解的汇编格式给出；-dd 　　　将匹配信息包的代码以c语言程序段的格式给出；-ddd 　　　将匹配信息包的代码以十进制的形式给出；-e 　　　在输出行打印出数据链路层的头部信息；-f 　　　将外部的Internet地址以数字的形式打印出来；-l 　　　使标准输出变为缓">
+<meta property="og:description" content="抓包工具tcpdumptcpdump的选项介绍-a 　　　将网络地址和广播地址转变成名字；-d 　　　将匹配信息包的代码以人们能够理解的汇编格式给出；-dd 　　　将匹配信息包的代码以c语言程序段的格式给出；">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-05-28T12:32:03.879Z">
+<meta property="og:updated_time" content="2018-05-28T12:34:53.801Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TcpDump 简析">
-<meta name="twitter:description" content="抓包工具tcpdumptcpdump的选项介绍-a 　　　将网络地址和广播地址转变成名字；-d 　　　将匹配信息包的代码以人们能够理解的汇编格式给出；-dd 　　　将匹配信息包的代码以c语言程序段的格式给出；-ddd 　　　将匹配信息包的代码以十进制的形式给出；-e 　　　在输出行打印出数据链路层的头部信息；-f 　　　将外部的Internet地址以数字的形式打印出来；-l 　　　使标准输出变为缓">
+<meta name="twitter:description" content="抓包工具tcpdumptcpdump的选项介绍-a 　　　将网络地址和广播地址转变成名字；-d 　　　将匹配信息包的代码以人们能够理解的汇编格式给出；-dd 　　　将匹配信息包的代码以c语言程序段的格式给出；">
   
     <link rel="alternate" href="/atom.xml" title="fralychen" type="application/atom+xml">
   
@@ -107,7 +107,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="抓包工具tcpdump"><a href="#抓包工具tcpdump" class="headerlink" title="抓包工具tcpdump"></a>抓包工具tcpdump</h2><h3 id="tcpdump的选项介绍"><a href="#tcpdump的选项介绍" class="headerlink" title="tcpdump的选项介绍"></a>tcpdump的选项介绍</h3><p>-a 　　　将网络地址和广播地址转变成名字；<br>-d 　　　将匹配信息包的代码以人们能够理解的汇编格式给出；<br>-dd 　　　将匹配信息包的代码以c语言程序段的格式给出；<br>-ddd 　　　将匹配信息包的代码以十进制的形式给出；<br>-e 　　　在输出行打印出数据链路层的头部信息；<br>-f 　　　将外部的Internet地址以数字的形式打印出来；<br>-l 　　　使标准输出变为缓冲行形式；<br>-n 　　　不把网络地址转换成名字；<br>-t 　　　在输出的每一行不打印时间戳；<br>-v 　　　输出一个稍微详细的信息，例如在ip包中可以包括ttl和服务类型的信息；<br>-vv 　　　输出详细的报文信息；<br>-c 　　　在收到指定的包的数目后，tcpdump就会停止；<br>-F 　　　从指定的文件中读取表达式,忽略其它的表达式；<br>-i 　　　指定监听的网络接口；<br>-r 　　　从指定的文件中读取包(这些包一般通过-w选项产生)；<br>-w 　　　直接将包写入文件中，并不分析和打印出来；<br>-T 　　　将监听到的包直接解释为指定的类型的报文，常见的类型有rpc （远程过程调用）和snmp（简单网络管理协议；））</p>
+        <h2 id="抓包工具tcpdump"><a href="#抓包工具tcpdump" class="headerlink" title="抓包工具tcpdump"></a>抓包工具tcpdump</h2><h3 id="tcpdump的选项介绍"><a href="#tcpdump的选项介绍" class="headerlink" title="tcpdump的选项介绍"></a>tcpdump的选项介绍</h3><p>-a 　　　将网络地址和广播地址转变成名字；<br>-d 　　　将匹配信息包的代码以人们能够理解的汇编格式给出；<br>-dd 　　　将匹配信息包的代码以c语言程序段的格式给出；<br><a id="more"></a><br>-ddd 　　　将匹配信息包的代码以十进制的形式给出；<br>-e 　　　在输出行打印出数据链路层的头部信息；<br>-f 　　　将外部的Internet地址以数字的形式打印出来；<br>-l 　　　使标准输出变为缓冲行形式；<br>-n 　　　不把网络地址转换成名字；<br>-t 　　　在输出的每一行不打印时间戳；<br>-v 　　　输出一个稍微详细的信息，例如在ip包中可以包括ttl和服务类型的信息；<br>-vv 　　　输出详细的报文信息；<br>-c 　　　在收到指定的包的数目后，tcpdump就会停止；<br>-F 　　　从指定的文件中读取表达式,忽略其它的表达式；<br>-i 　　　指定监听的网络接口；<br>-r 　　　从指定的文件中读取包(这些包一般通过-w选项产生)；<br>-w 　　　直接将包写入文件中，并不分析和打印出来；<br>-T 　　　将监听到的包直接解释为指定的类型的报文，常见的类型有rpc （远程过程调用）和snmp（简单网络管理协议；））</p>
 <h3 id="表达式介绍"><a href="#表达式介绍" class="headerlink" title="表达式介绍"></a>表达式介绍</h3><p>表达式是一个正则表达式，tcpdump利用它作为过滤报文的条件，如果一个报文满足表达式的条件；<br>则这个报文将会被捕获，如果没有给出任何条件，则网络上所有的信息包将会被截获。</p>
 <p>在表达式中一般如下几种类型的关键字，<br>一种是关于类型的关键字，主要包括host，net，port, 例如 host 210.27.48.2，指明 210.27.48.2是一台主机；<br>net 202.0.0.0 指明202.0.0.0是一个网络地址，port 23 指明端口号是23。如果没有指定类型，缺省的类型是host.</p>
 <p>第二种是确定传输方向的关键字，主要包括src , dst ,dst or src, dst and src ,这些关键字指明了传输的方向；<br>举例说明，src 210.27.48.2 ,指明ip包中源地址是210.27.48.2 , dst net 202.0.0.0 指明目的网络地址是202.0.0.0 。<br>如果没有指明方向关键字，则缺省是src or dst关键字。</p>
@@ -125,7 +125,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/05/28/TcpDump-简析/" data-id="cjhq8g7ur0007af5vy7u1yr5q" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/05/28/TcpDump-简析/" data-id="cjhq8js2a0007gi5vlp5e6foy" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NetWork/">NetWork</a></li></ul>
