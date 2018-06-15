@@ -86,6 +86,93 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-HAProxy-Documentation" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/05/10/HAProxy-Documentation/" class="article-date">
+  <time datetime="2018-05-10T01:45:40.000Z" itemprop="datePublished">2018-05-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/10/HAProxy-Documentation/">HAProxy Documentation</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>This document doesn’t provide any configuration help or hints, but it explains<br>where to find the relevant documents. The summary below is meant to help you<br>search sections by name and navigate through the document.</p>
+<p>Note to documentation contributors :<br>    This document is formatted with 80 columns per line, with even number of<br>    spaces for indentation and without tabs. Please follow these rules strictly<br>    so that it remains easily printable everywhere. If you add sections, please<br>    update the summary below for easier searching.</p>
+        
+          <p class="article-more-link">
+            <a href="/2018/05/10/HAProxy-Documentation/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/05/10/HAProxy-Documentation/" data-id="cjifts92b0010w45vy6i0po89" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-NGINX-Load-Balancing-HTTP-Load-Balancer" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/05/09/NGINX-Load-Balancing-HTTP-Load-Balancer/" class="article-date">
+  <time datetime="2018-05-09T08:06:02.000Z" itemprop="datePublished">2018-05-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/09/NGINX-Load-Balancing-HTTP-Load-Balancer/">NGINX Load Balancing-HTTP Load Balancer</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>#Proxying HTTP Traffic to a Group of Servers<br>To start using NGINX Plus or NGINX to load balance HTTP traffic to a group of servers, first you need to define the group with the upstream directive. The directive is placed in the http context.</p>
+<p>Servers in the group are configured using the server directive (not to be confused with the server block that defines a virtual server running on NGINX). For example, the following configuration defines a group named backend and consists of three server configurations (which may resolve in more than three actual servers):</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">http &#123;</span><br><span class="line">    upstream backend &#123;</span><br><span class="line">        server backend1.example.com weight=5;</span><br><span class="line">        server backend2.example.com;</span><br><span class="line">        server 192.0.0.1 backup;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        
+          <p class="article-more-link">
+            <a href="/2018/05/09/NGINX-Load-Balancing-HTTP-Load-Balancer/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/05/09/NGINX-Load-Balancing-HTTP-Load-Balancer/" data-id="cjifts9010005w45v4cgnoofx" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nginx-balancer/">nginx balancer</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-java-maven-app-with-docker-github" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/05/09/java-maven-app-with-docker-github/" class="article-date">
@@ -117,7 +204,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/05/09/java-maven-app-with-docker-github/" data-id="cjhy589li000fyt5vd366zooo" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/05/09/java-maven-app-with-docker-github/" data-id="cjifts90c000cw45vjqaw09v4" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jenkins/">jenkins</a></li></ul>
@@ -161,7 +248,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/05/06/LVS-docker实现负载均衡/" data-id="cjhy589kw0005yt5vmf1afobw" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/05/06/LVS-docker实现负载均衡/" data-id="cjifts90e000ew45v56g9duye" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LVS-docker/">LVS|docker</a></li></ul>
@@ -205,7 +292,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/05/05/IP协议介绍/" data-id="cjhy589kg0002yt5vs4emvcrm" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/05/05/IP协议介绍/" data-id="cjifts8z90001w45v9lins07g" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/network/">network</a></li></ul>
@@ -267,6 +354,14 @@
       <ul>
         
           <li>
+            <a href="/2018/06/15/远程无法连接排障思路/">远程无法连接排障思路</a>
+          </li>
+        
+          <li>
+            <a href="/2018/06/09/Kickstart自动批量安装Llinux客户端（CentOS/">Kickstart自动批量安装Llinux客户端（CentOS</a>
+          </li>
+        
+          <li>
             <a href="/2018/06/03/chmod权限命令详解/">chmod权限命令详解</a>
           </li>
         
@@ -276,14 +371,6 @@
         
           <li>
             <a href="/2018/05/28/TcpDump-简析/">TcpDump 简析</a>
-          </li>
-        
-          <li>
-            <a href="/2018/05/26/hello-world/">Hello World</a>
-          </li>
-        
-          <li>
-            <a href="/2018/05/26/vim配置方案/">vim配置方案</a>
           </li>
         
       </ul>
